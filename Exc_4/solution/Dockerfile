@@ -17,4 +17,4 @@ WORKDIR /app
 COPY --from=builder /app/ordersystem .
 
 # Command to run the service
-CMD ["./orderservice"]
+CMD ["./ordersystem"]

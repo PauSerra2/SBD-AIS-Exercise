@@ -27,7 +27,7 @@ services:
       - "3000:3000"  # Expose port 3000 for Orderservice
     environment:
       DB_HOST: postgres  # Hostname of the PostgreSQL container
-    command: ["./orderservice"]  # Command to start the Orderservice binary
+    command: ["./ordersystem"]  # Command to start the Orderservice binary
     networks:
       - shared_network  # Shared network with PostgreSQL
 
