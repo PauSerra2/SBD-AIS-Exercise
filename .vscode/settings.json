@@ -1,0 +1,5 @@
+{
+    "minio.minio.server.address": "http://localhost:8500",
+    "minio.minio.credential.accessKey": "root",
+    "minio.minio.credential.secretKey": "verysecret"
+}
