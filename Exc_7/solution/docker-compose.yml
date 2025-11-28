@@ -43,6 +43,9 @@ services:
     networks:
       - web
     deploy:
+      # todo
+      # Replicate only to manager
+      # expose dashboard to localhost/dashboard
         mode: replicated
         replicas: 1
         placement:
@@ -56,10 +59,13 @@ services:
     networks:
       - web
     deploy:
+      # todo deploy globally
           mode: global # Replicates to EVERY node
+
+          # should be available at http://localhost from every node
           labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.frontend.rule=PathPrefix(/)" # Catch-all for root
+            - "traefik.http.routers.frontend.rule=PathPrefix(`/`)" # Catch-all for root
             - "traefik.http.routers.frontend.entrypoints=web"
             - "traefik.http.services.frontend.loadbalancer.server.port=80" # Internal container port
 
@@ -95,7 +101,7 @@ services:
       # Should be reachable at http://orders.localhost
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.orders.rule=Host(orders.localhost)"
+        - "traefik.http.routers.orders.rule=Host(`orders.localhost`)"
         - "traefik.http.routers.orders.entrypoints=web"
         - "traefik.http.services.orders.loadbalancer.server.port=3000"
       # always restart container on failure
@@ -105,7 +111,7 @@ services:
         window: 120s
 
   postgres:
-      image: postgres:17
+      image: postgres:18
       volumes:
         - order_pg_vol:/var/lib/postgresql
       networks:
@@ -122,29 +128,33 @@ services:
         - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
       deploy:
         # todo replicate only to one worker node
-        # todo use constraints
         mode: replicated 
         replicas: 1
         placement:
+          # todo use constraints
           constraints:
-              - node.id == 2z8z2h3vzdxhxo4j9qsvdmxep
+              - node.hostname==enrique-VirtualBox
 
   minio:
     image: minio/minio:latest
-    command: [ "server", "--address", ":8500", "/data" ]
+    command: [ "server", "--address", ":8500", "--console-address", ":9001", "/data" ]
     volumes:
       - minio_vol:/data
     secrets:
+      # todo use secrets
       - s3_user
       - s3_password
     environment:
+      # todo use secrets
       - MINIO_ROOT_USER_FILE=/run/secrets/s3_user
       - MINIO_ROOT_PASSWORD_FILE=/run/secrets/s3_password
     networks:
       - intercom
     deploy:
+      # todo replicate only to one worker node
       mode: replicated
       replicas: 1
       placement:
+      # todo use constraints
         constraints:
-          - node.id == s6pvei79p6e2po2cm8ysdgwty 
+          - node.hostname==enrique-VirtualBox
