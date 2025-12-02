@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option go_package = "exc8/pb;pb";
+
+package models;
+
+// Messages
+message Drink {
+  int32 id = 1;
+  string name = 2;
+  int32 price = 3;
+  string description = 4;
+}
+
+message Order {
+  int32 drink_id = 1;
+  int32 quantity = 2;
+}
+
+message OrderRequest {
+  Order order = 1;
+}
+
+message OrderResponse {
+  bool success = 1;
+}
+
+message DrinksResponse {
+  repeated Drink drinks = 1;
+}
+
+message OrdersResponse {
+  repeated Order orders = 1;
+}
+
+// Service
+service OrderService {
+  rpc OrderDrink (OrderRequest) returns (OrderResponse);
+  rpc GetDrinks (google.protobuf.Empty) returns (DrinksResponse);
+  rpc GetOrders (google.protobuf.Empty) returns (OrdersResponse);
+}
