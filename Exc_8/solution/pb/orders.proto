@@ -6,6 +6,8 @@ option go_package = "exc8/pb;pb";
 
 package models;
 
+// todo implement messages
+
 // Messages
 message Drink {
   int32 id = 1;
@@ -34,6 +36,8 @@ message DrinksResponse {
 message OrdersResponse {
   repeated Order orders = 1;
 }
+
+// Define the service
 
 // Service
 service OrderService {

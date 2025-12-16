@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-    // Start the gRPC server in a separate goroutine
+    // Start the gRPC server 
     go func() {
         if err := server.StartGrpcServer(); err != nil {
             log.Fatalf("failed to start gRPC server: %v", err)
@@ -17,7 +17,7 @@ func main() {
     }()
 
     // Give the server a moment to start
-    time.Sleep(10 * time.Second)
+    time.Sleep(1 * time.Second)
 
     // Create and run the gRPC client
     c, err := client.NewGrpcClient()

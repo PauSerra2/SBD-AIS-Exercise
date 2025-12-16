@@ -27,7 +27,7 @@ func NewGrpcClient() (*GrpcClient, error) {
 // Run executes the client workflow: list drinks, order drinks, order more, and get totals
 func (c *GrpcClient) Run() error {
     ctx := context.Background()
-
+    // todo
     // 1. List drinks
     fmt.Println("Requesting drinks 🍹🍺☕")
     fmt.Println("Available drinks:")

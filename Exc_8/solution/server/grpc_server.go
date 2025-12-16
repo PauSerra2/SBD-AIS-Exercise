@@ -18,18 +18,6 @@ type GRPCService struct {
     orders map[int32]int32 // drink_id -> total quantity
 }
 
-func NewGRPCService() *GRPCService {
-    return &GRPCService{
-        drinks: []*pb.Drink{
-            {Id: 1, Name: "Spritzer", Price: 2, Description: "Wine with soda"},
-            {Id: 2, Name: "Beer", Price: 3, Description: "Hagenberger Gold"},
-            {Id: 3, Name: "Coffee", Price: 0, Description: "Mifare isn't that secure"},
-        },
-        orders: make(map[int32]int32),
-    }
-}
-
-
 // StartGrpcServer starts the gRPC server on port 4000
 func StartGrpcServer() error {
     srv := grpc.NewServer()
@@ -46,6 +34,19 @@ func StartGrpcServer() error {
         return err
     }
     return nil
+}
+
+// todo implement functions
+
+func NewGRPCService() *GRPCService {
+    return &GRPCService{
+        drinks: []*pb.Drink{
+            {Id: 1, Name: "Spritzer", Price: 2, Description: "Wine with soda"},
+            {Id: 2, Name: "Beer", Price: 3, Description: "Hagenberger Gold"},
+            {Id: 3, Name: "Coffee", Price: 0, Description: "Mifare isn't that secure"},
+        },
+        orders: make(map[int32]int32),
+    }
 }
 
 // GetDrinks returns all available drinks
